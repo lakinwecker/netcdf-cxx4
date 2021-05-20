@@ -11,32 +11,38 @@ file(GLOB CXX_SOURCES nc*.cpp)
 ###
 IF(NCXX_ENABLE_TESTS)
 
-  add_bin_test(cxx4 test_classic)
-  add_bin_test(cxx4 test_group)
-  add_bin_test(cxx4 test_dim)
-  add_bin_test(cxx4 test_att)
-  add_bin_test(cxx4 test_var)
-  add_bin_test(cxx4 test_var2)
-  add_bin_test(cxx4 test_type)
-  add_bin_test(cxx4 test_open_close)
-  add_bin_test(cxx4 test_ncFile_Flags)
-  add_bin_test(cxx4 test_filter)
-
+  #add_bin_test(cxx4 test_classic)
+  #add_bin_test(cxx4 test_group)
+  #add_bin_test(cxx4 test_dim)
+  #add_bin_test(cxx4 test_att)
+  #add_bin_test(cxx4 test_var)
+  #add_bin_test(cxx4 test_var2)
+  #add_bin_test(cxx4 test_type)
+  #add_bin_test(cxx4 test_open_close)
+  #add_bin_test(cxx4 test_ncFile_Flags)
+  #add_bin_test(cxx4 test_filter)
 ENDIF()
 
-SET(ALL_TLL_LIBS ${HDF5_HL_LIBRARIES} ${HDF5_C_LIBRARIES} curl ${CMAKE_DL_LIBS})
+link_directories(${CONAN_LIB_DIRS_HDF5})
+link_directories(${CONAN_LIB_DIRS_LIBCURL})
+link_directories(${CONAN_LIB_DIRS_LIBDEFLATE})
+link_directories(${CONAN_LIB_DIRS_OPENSSL})
+link_directories(${CONAN_LIB_DIRS_ZLIB})
+
+SET(ALL_TLL_LIBS ${CONAN_LIBS_HDF5} ${CONAN_LIBS_LIBCURL} ${CONAN_LIBS_LIBDEFLATE} ${CONAN_LIBS_OPENSSL} ${CONAN_LIBS_ZLIB} ${CMAKE_DL_LIBS})
 SET(ALL_TLL_LIBS ${ALL_TLL_LIBS} ${EXTRA_DEPS} PARENT_SCOPE)
 
-ADD_LIBRARY(netcdf-cxx4 ${CXX_SOURCES})
+ADD_LIBRARY(netcdf-cxx4 STATIC ${CXX_SOURCES})
 add_library(netCDF::netcdf-cxx4 ALIAS netcdf-cxx4)
 
 TARGET_INCLUDE_DIRECTORIES(netcdf-cxx4 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<INSTALL_INTERFACE:include>
   )
+
 TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC netCDF::netcdf)
 TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC ${ALL_TLL_LIBS})
-target_include_directories(netcdf-cxx4 SYSTEM PUBLIC "${HDF5_INCLUDE_DIRS}")
+target_include_directories(netcdf-cxx4 SYSTEM PUBLIC "${CONAN_INCLUDE_DIRS_HDF5}")
 
 SET_TARGET_PROPERTIES(netcdf-cxx4 PROPERTIES
   VERSION ${NCXX_LIB_VERSION}
