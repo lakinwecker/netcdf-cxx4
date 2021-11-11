@@ -23,17 +23,22 @@ IF(NCXX_ENABLE_TESTS)
   #add_bin_test(cxx4 test_filter)
 ENDIF()
 
-link_directories(${CONAN_LIB_DIRS_HDF5})
-link_directories(${CONAN_LIB_DIRS_LIBCURL})
-link_directories(${CONAN_LIB_DIRS_LIBDEFLATE})
-link_directories(${CONAN_LIB_DIRS_OPENSSL})
-link_directories(${CONAN_LIB_DIRS_ZLIB})
 
-SET(ALL_TLL_LIBS ${CONAN_LIBS_HDF5} ${CONAN_LIBS_LIBCURL} ${CONAN_LIBS_LIBDEFLATE} ${CONAN_LIBS_OPENSSL} ${CONAN_LIBS_ZLIB} ${CMAKE_DL_LIBS})
+SET(ALL_TLL_LIBS
+	CONAN_PKG::hdf5
+	CONAN_PKG::libcurl
+	CONAN_PKG::libdeflate
+	CONAN_PKG::openssl
+	CONAN_PKG::zlib
+	${CMAKE_DL_LIBS}
+)
 SET(ALL_TLL_LIBS ${ALL_TLL_LIBS} ${EXTRA_DEPS} PARENT_SCOPE)
 
 ADD_LIBRARY(netcdf-cxx4 STATIC ${CXX_SOURCES})
 add_library(netCDF::netcdf-cxx4 ALIAS netcdf-cxx4)
+
+target_link_libraries(netcdf-cxx4
+)
 
 TARGET_INCLUDE_DIRECTORIES(netcdf-cxx4 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
