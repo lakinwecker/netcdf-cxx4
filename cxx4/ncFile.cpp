@@ -127,7 +127,7 @@ void NcFile::open(const string& filePath, const FileMode fMode, const FileFormat
   if (!nullObject)
     close();
 
-  int format;
+  int format = 0;
   switch (fFormat)
     {
     case NcFile::classic:
