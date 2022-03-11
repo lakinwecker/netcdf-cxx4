@@ -8,7 +8,11 @@
 cmake_minimum_required(VERSION 2.8.12)
 
 #Project Name
-PROJECT(NCXX C CXX)
+PROJECT(
+	NCXX
+	LANGUAGES C CXX
+)
+
 set(PACKAGE "netcdf-cxx4" CACHE STRING "")
 
 #####
@@ -348,14 +352,10 @@ MARK_AS_ADVANCED(NCXX_CTEST_PROJECT_NAME
 ###
 # Find NetCDF
 ###
-IF(NOT netCDF_LIBRARIES AND NOT netCDF_INCLUDE_DIR)
-  FIND_PACKAGE(netCDF QUIET)
-ELSE()
-  SET(netCDF_FOUND TRUE)
-ENDIF()
+FIND_PACKAGE(netCDF REQUIRED)
 
 IF (netCDF_FOUND)
-  SET(NETCDF_C_LIBRARY ${netCDF_LIBRARIES})
+	SET(NETCDF_C_LIBRARY netCDF::netCDF)
   SET(NETCDF_C_INCLUDE_DIR ${netCDF_INCLUDE_DIR})
   message(STATUS "Found netCDF CMake package: ${NETCDF_C_LIBRARY}")
 ELSE()
@@ -387,6 +387,7 @@ endif()
 ###
 # Check to see if netcdf-c was built with parallel.
 ###
+message(STATUS ${NETCDF_C_LIBRARY})
 CHECK_LIBRARY_EXISTS(${NETCDF_C_LIBRARY} nc_use_parallel_enabled "" NC_IS_PARALLEL)
 IF(NC_IS_PARALLEL)
   SET(BUILD_PARALLEL ${NC_IS_PARALLEL} CACHE STRING "")

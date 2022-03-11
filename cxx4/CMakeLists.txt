@@ -25,11 +25,11 @@ ENDIF()
 
 
 SET(ALL_TLL_LIBS
-	CONAN_PKG::hdf5
-	CONAN_PKG::libcurl
-	CONAN_PKG::libdeflate
-	CONAN_PKG::openssl
-	CONAN_PKG::zlib
+	hdf5::hdf5
+	CURL::libcurl
+	libdeflate::libdeflate
+	OpenSSL::SSL
+	ZLIB::ZLIB
 	${CMAKE_DL_LIBS}
 )
 SET(ALL_TLL_LIBS ${ALL_TLL_LIBS} ${EXTRA_DEPS} PARENT_SCOPE)
@@ -41,13 +41,13 @@ target_link_libraries(netcdf-cxx4
 )
 
 TARGET_INCLUDE_DIRECTORIES(netcdf-cxx4 PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<INSTALL_INTERFACE:include>
-  )
+$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+$<INSTALL_INTERFACE:include>
+)
 
-TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC netCDF::netcdf)
+TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC netCDF::netCDF)
 TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC ${ALL_TLL_LIBS})
-target_include_directories(netcdf-cxx4 SYSTEM PUBLIC "${CONAN_INCLUDE_DIRS_HDF5}")
+#target_include_directories(netcdf-cxx4 SYSTEM PUBLIC "${CONAN_INCLUDE_DIRS_HDF5}")
 
 SET_TARGET_PROPERTIES(netcdf-cxx4 PROPERTIES
   VERSION ${NCXX_LIB_VERSION}
