@@ -9,8 +9,8 @@ cmake_minimum_required(VERSION 2.8.12)
 
 #Project Name
 PROJECT(
-	NCXX
-	LANGUAGES C CXX
+    NCXX
+    LANGUAGES C CXX
 )
 
 set(PACKAGE "netcdf-cxx4" CACHE STRING "")
@@ -125,7 +125,7 @@ EXECUTE_PROCESS(
   OUTPUT_VARIABLE CONFIG_DATE
   )
 IF(CONFIG_DATE)
-	string(STRIP ${CONFIG_DATE} CONFIG_DATE)
+    string(STRIP ${CONFIG_DATE} CONFIG_DATE)
 ENDIF()
 
 # Check to see if we have bash.
@@ -355,8 +355,9 @@ MARK_AS_ADVANCED(NCXX_CTEST_PROJECT_NAME
 FIND_PACKAGE(netCDF REQUIRED)
 
 IF (netCDF_FOUND)
-	SET(NETCDF_C_LIBRARY netCDF::netCDF)
+  SET(NETCDF_C_LIBRARY netCDF::netCDF)
   SET(NETCDF_C_INCLUDE_DIR ${netCDF_INCLUDE_DIR})
+
   message(STATUS "Found netCDF CMake package: ${NETCDF_C_LIBRARY}")
 ELSE()
   # netCDF not properly packaged. Try to find it manually.
@@ -376,9 +377,9 @@ ELSE()
 ENDIF()
 
 
-if (NOT TARGET netCDF::netcdf)
-  add_library(netCDF::netcdf UNKNOWN IMPORTED)
-  set_target_properties(netCDF::netcdf PROPERTIES
+if (NOT TARGET netCDF::netCDF)
+  add_library(netCDF::netCDF UNKNOWN IMPORTED)
+  set_target_properties(netCDF::netCDF PROPERTIES
     IMPORTED_LOCATION "${NETCDF_C_LIBRARY}"
     INTERFACE_INCLUDE_DIRECTORIES "${NETCDF_C_INCLUDE_DIR}"
   )
