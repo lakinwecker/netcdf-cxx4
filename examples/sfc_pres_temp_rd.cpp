@@ -8,10 +8,10 @@
    illustrate the use of the netCDF C++ API.
 
    This program is part of the netCDF tutorial:
-   http://www.unidata.ucar.edu/software/netcdf/docs/netcdf-tutorial
+   https://docs.unidata.ucar.edu/netcdf-c/current/tutorial_8dox.html
 
    Full documentation of the netCDF C++ API can be found at:
-   http://www.unidata.ucar.edu/software/netcdf/docs/netcdf-cxx
+   https://docs.unidata.ucar.edu/netcdf-cxx
 
    $Id: sfc_pres_temp_rd.cpp,v 1.6 2010/02/11 22:36:42 russ Exp $
 */
@@ -149,10 +149,10 @@ int main(void)
    //cout << "*** SUCCESS reading example file sfc_pres_temp.nc!" << endl;
    return 0;
   }
-  catch(NcException e)
+  catch(NcException& e)
   {
-     e.what();
-     cout<<"FAILURE********************************8"<<endl;
-     return NC_ERR;
+      cout<<"FAILURE**************************\n";
+      cout << e.what() << endl;
+      return NC_ERR;
   }
 }
