@@ -388,8 +388,7 @@ endif()
 ###
 # Check to see if netcdf-c was built with parallel.
 ###
-message(STATUS ${NETCDF_C_LIBRARY})
-CHECK_LIBRARY_EXISTS(${NETCDF_C_LIBRARY} nc_use_parallel_enabled "" NC_IS_PARALLEL)
+#CHECK_LIBRARY_EXISTS(${NETCDF_C_LIBRARY} nc_use_parallel_enabled "" NC_IS_PARALLEL)
 IF(NC_IS_PARALLEL)
   SET(BUILD_PARALLEL ${NC_IS_PARALLEL} CACHE STRING "")
 ENDIF()
@@ -397,7 +396,7 @@ ENDIF()
 ###
 # Check to see if netcdf-c was built with plugin support.
 ###
-CHECK_LIBRARY_EXISTS(${NETCDF_C_LIBRARY} nc_def_var_filter "" NC_HAS_DEF_VAR_FILTER)
+#CHECK_LIBRARY_EXISTS(${NETCDF_C_LIBRARY} nc_def_var_filter "" NC_HAS_DEF_VAR_FILTER)
 IF(NC_HAS_DEF_VAR_FILTER)
   SET(HAS_DEF_VAR_FILTER ${NC_HAS_DEF_VAR_FILTER} CACHE STRING "")
 ENDIF(NC_HAS_DEF_VAR_FILTER)
