@@ -40,13 +40,23 @@ add_library(netCDF::netcdf-cxx4 ALIAS netcdf-cxx4)
 target_link_libraries(netcdf-cxx4
 )
 
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+	set(NETCDF_CXX4_COMPILE_OPTIONS -Wno-everything)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	set(NETCDF_CXX4_COMPILE_OPTIONS -w) # TUrn off all warnings for nanovg
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+	# using Visual Studio C++
+	set(NETCDF_CXX4_COMPILE_OPTIONS /W0)
+endif()
+
 TARGET_INCLUDE_DIRECTORIES(netcdf-cxx4 PUBLIC
 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 $<INSTALL_INTERFACE:include>
 )
-
 TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC netCDF::netCDF)
 TARGET_LINK_LIBRARIES(netcdf-cxx4 PUBLIC ${ALL_TLL_LIBS})
+TARGET_COMPILE_OPTIONS(netcdf-cxx4 PRIVATE ${NETCDF_CXX4_COMPILE_OPTIONS})
 #target_include_directories(netcdf-cxx4 SYSTEM PUBLIC "${CONAN_INCLUDE_DIRS_HDF5}")
 
 SET_TARGET_PROPERTIES(netcdf-cxx4 PROPERTIES
